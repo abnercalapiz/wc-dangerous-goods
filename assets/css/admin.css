@@ -1,0 +1,116 @@
+/**
+ * Admin styles for WooCommerce Dangerous Goods
+ *
+ * @package WC_Dangerous_Goods
+ * @since 1.0.0
+ */
+
+/* Settings Page */
+.wc-dangerous-goods-settings {
+    max-width: 800px;
+}
+
+.wc-dangerous-goods-settings .form-table th {
+    width: 200px;
+}
+
+.wc-dangerous-goods-settings .regular-text {
+    width: 300px;
+}
+
+/* Preview Box */
+.wc-dangerous-goods-info {
+    margin-top: 40px;
+}
+
+.wc-dangerous-goods-info .preview-box {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.wc-dangerous-goods-info .fee-preview {
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 12px 15px;
+    display: inline-block;
+    border-radius: 0 4px 4px 0;
+}
+
+.wc-dangerous-goods-info .fee-preview .icon {
+    font-size: 1.1em;
+    margin-right: 5px;
+}
+
+.wc-dangerous-goods-info .fee-preview .label {
+    font-weight: 600;
+    color: #856404;
+    margin-right: 5px;
+}
+
+.wc-dangerous-goods-info .fee-preview .amount {
+    font-weight: 600;
+    color: #d63384;
+}
+
+/* Product Meta Fields */
+.wc-dangerous-goods-options {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.wc-dangerous-goods-options .checkbox {
+    margin-top: 5px !important;
+}
+
+/* Variation Fields */
+body .woocommerce_variable_attributes input.variable_dangerous_goods {
+    margin-left: 0px !important;
+    margin-right: 7px !important;
+}
+
+/* Fix checkbox spacing in product variations */
+label[data-tip*="dangerous goods"] input[type="checkbox"] {
+    margin-right: 8px !important;
+}
+
+/* Fix dangerous goods label spacing */
+label[for*="_dangerous_goods"] {
+    display: flex;
+    align-items: center;
+}
+
+label[for*="_dangerous_goods"] input[type="checkbox"] {
+    margin-right: 8px !important;
+}
+
+/* Info Lists */
+.wc-dangerous-goods-info h2 {
+    margin-top: 30px;
+    color: #23282d;
+}
+
+.wc-dangerous-goods-info ol,
+.wc-dangerous-goods-info ul {
+    margin-left: 20px;
+}
+
+.wc-dangerous-goods-info li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+/* Responsive */
+@media screen and (max-width: 782px) {
+    .wc-dangerous-goods-settings .form-table th {
+        width: auto;
+        padding-bottom: 0;
+    }
+    
+    .wc-dangerous-goods-settings .regular-text {
+        width: 100%;
+        max-width: 400px;
+    }
+}

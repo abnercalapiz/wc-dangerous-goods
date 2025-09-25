@@ -1,0 +1,128 @@
+/**
+ * Frontend styles for WooCommerce Dangerous Goods
+ *
+ * @package WC_Dangerous_Goods
+ * @since 1.0.0
+ */
+
+/* Product Notice */
+.wc-dangerous-goods-notice {
+    margin: 15px 0;
+    padding: 12px 15px;
+    border-radius: 4px;
+    line-height: 1.5;
+}
+
+.wc-dangerous-goods-product-notice {
+    background-color: #ffebee;
+    border: 1px solid #f44336;
+    color: #b71c1c;
+}
+
+.wc-dangerous-goods-product-notice .icon {
+    font-size: 1.1em;
+    margin-right: 5px;
+}
+
+/* Cart and Checkout Notices */
+.wc-dangerous-goods-cart-notice,
+.wc-dangerous-goods-checkout-notice {
+    background-color: #fff3cd !important;
+    border-left: 4px solid #ffc107 !important;
+    color: #856404 !important;
+    margin-bottom: 20px;
+}
+
+.wc-dangerous-goods-cart-notice .icon,
+.wc-dangerous-goods-checkout-notice .icon {
+    font-size: 1.2em;
+    margin-right: 5px;
+}
+
+/* Shop Loop Notice */
+.wc-dangerous-goods-shop-notice {
+    display: inline-block;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    margin: 5px 0;
+    border: 1px solid #ffeaa7;
+}
+
+.wc-dangerous-goods-shop-notice .wc-dangerous-goods-icon {
+    margin-right: 3px;
+}
+
+/* Cart Item Warning */
+.wc-dangerous-goods-cart-item-warning {
+    color: #d63384;
+    font-weight: 600;
+}
+
+/* Fee Styling in Cart/Checkout */
+.cart_totals .fee th,
+.cart_totals .fee td,
+.woocommerce-checkout-review-order-table .fee th,
+.woocommerce-checkout-review-order-table .fee td {
+    color: #d63384 !important;
+    font-weight: 600;
+}
+
+.cart_totals .fee th:before,
+.woocommerce-checkout-review-order-table .fee th:before {
+    content: "⚠️ ";
+    margin-right: 5px;
+}
+
+.cart_totals table tr.fee,
+.woocommerce-checkout-review-order-table tr.fee {
+    background-color: #fff3cd;
+    border-left: 3px solid #ffc107;
+}
+
+.cart_totals .fee td,
+.woocommerce-checkout-review-order-table .fee td {
+    padding: 8px 12px !important;
+}
+.cart_totals .wc-dangerous-goods-notice::before {
+    display: none !important;
+}
+.cart_totals .wc-dangerous-goods-notice {
+    color: #000000 !important;
+}
+.cart_totals .wc-dangerous-goods-notice span.woocommerce-Price-amount.amount {
+    font-size: unset !important;
+    font-weight: 700 !important;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .wc-dangerous-goods-notice {
+        padding: 10px 12px;
+        font-size: 0.95em;
+    }
+    
+    .wc-dangerous-goods-shop-notice {
+        display: block;
+        text-align: center;
+        margin: 10px 0;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .wc-dangerous-goods-product-notice {
+        background-color: #4a1c1c;
+        border-color: #d32f2f;
+        color: #ffcdd2;
+    }
+    
+    .wc-dangerous-goods-cart-notice,
+    .wc-dangerous-goods-checkout-notice {
+        background-color: #3e2f00 !important;
+        border-left-color: #ff9800 !important;
+        color: #ffe082 !important;
+    }
+}
