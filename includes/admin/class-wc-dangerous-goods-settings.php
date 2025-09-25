@@ -86,7 +86,7 @@ class WC_Dangerous_Goods_Settings {
         
         $fee_label = isset($_POST['fee_label']) ? sanitize_text_field($_POST['fee_label']) : '';
         if (empty($fee_label)) {
-            $fee_label = __('Dangerous Goods Handling Fee', 'wc-dangerous-goods');
+            $fee_label = __('Dangerous Goods Fee', 'wc-dangerous-goods');
         }
         
         // Save settings
@@ -116,7 +116,7 @@ class WC_Dangerous_Goods_Settings {
     public static function get_defaults() {
         return array(
             'fee_amount' => 20,
-            'fee_label' => __('Dangerous Goods Handling Fee', 'wc-dangerous-goods')
+            'fee_label' => __('Dangerous Goods Fee', 'wc-dangerous-goods')
         );
     }
 }

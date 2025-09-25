@@ -2,6 +2,10 @@
 
 A WooCommerce plugin that adds a "Dangerous Goods" checkbox to products and automatically applies a handling fee when dangerous goods items are added to the cart.
 
+**Version:** 1.0.1  
+**Requires:** WordPress 5.0+, WooCommerce 3.0+  
+**License:** GPL v2 or later
+
 ## Description
 
 This plugin allows you to mark products as containing dangerous goods and automatically charge a handling fee when customers purchase these items. It's perfect for stores that need to comply with shipping regulations for hazardous materials.
@@ -14,6 +18,7 @@ This plugin allows you to mark products as containing dangerous goods and automa
 - **Visual Indicators**: Clear warnings on product pages and cart/checkout pages
 - **Flexible Integration**: Works with both simple and variable products
 - **Professional Styling**: Eye-catching visual alerts with warning icons
+- **REST API Support**: Full integration with WooCommerce REST API for orders and products (v1.0.1)
 
 ## Requirements
 

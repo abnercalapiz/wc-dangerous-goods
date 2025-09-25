@@ -3,7 +3,7 @@
  * Plugin Name: WooCommerce Dangerous Goods Fee
  * Plugin URI: https://www.jezweb.com.au/
  * Description: Adds a "Dangerous Goods" checkbox to WooCommerce products and charges a flat $20 handling fee when dangerous goods are in the cart.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Jezweb
  * Author URI: https://www.jezweb.com.au/
  * Text Domain: wc-dangerous-goods
@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('WC_DANGEROUS_GOODS_VERSION', '1.0.0');
+define('WC_DANGEROUS_GOODS_VERSION', '1.0.1');
 define('WC_DANGEROUS_GOODS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WC_DANGEROUS_GOODS_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('WC_DANGEROUS_GOODS_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -104,7 +104,7 @@ function wc_dangerous_goods_activate() {
     // Add default options
     add_option('wc_dangerous_goods_settings', array(
         'fee_amount' => 20,
-        'fee_label' => __('Dangerous Goods Handling Fee', 'wc-dangerous-goods')
+        'fee_label' => __('Dangerous Goods Fee', 'wc-dangerous-goods')
     ));
     
     // Create database version

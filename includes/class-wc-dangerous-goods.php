@@ -45,6 +45,13 @@ class WC_Dangerous_Goods {
     public $frontend;
     
     /**
+     * REST API class instance
+     *
+     * @var WC_Dangerous_Goods_REST_API
+     */
+    public $rest_api;
+    
+    /**
      * Constructor
      */
     private function __construct() {
@@ -84,6 +91,9 @@ class WC_Dangerous_Goods {
         require_once WC_DANGEROUS_GOODS_PLUGIN_DIR . 'includes/frontend/class-wc-dangerous-goods-frontend.php';
         require_once WC_DANGEROUS_GOODS_PLUGIN_DIR . 'includes/frontend/class-wc-dangerous-goods-cart.php';
         require_once WC_DANGEROUS_GOODS_PLUGIN_DIR . 'includes/frontend/class-wc-dangerous-goods-product-display.php';
+        
+        // Load REST API class
+        require_once WC_DANGEROUS_GOODS_PLUGIN_DIR . 'includes/class-wc-dangerous-goods-rest-api.php';
     }
     
     /**
@@ -98,6 +108,9 @@ class WC_Dangerous_Goods {
         if (!is_admin() || defined('DOING_AJAX')) {
             $this->frontend = new WC_Dangerous_Goods_Frontend();
         }
+        
+        // Initialize REST API
+        $this->rest_api = new WC_Dangerous_Goods_REST_API();
         
         // Add plugin action links
         add_filter('plugin_action_links_' . WC_DANGEROUS_GOODS_PLUGIN_BASENAME, array($this, 'add_action_links'));
@@ -133,7 +146,7 @@ class WC_Dangerous_Goods {
     public static function get_settings() {
         return get_option('wc_dangerous_goods_settings', array(
             'fee_amount' => 20,
-            'fee_label' => __('Dangerous Goods Handling Fee', 'wc-dangerous-goods')
+            'fee_label' => __('Dangerous Goods Fee', 'wc-dangerous-goods')
         ));
     }
     
