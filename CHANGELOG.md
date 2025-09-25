@@ -2,6 +2,25 @@
 
 All notable changes to the WooCommerce Dangerous Goods plugin will be documented in this file.
 
+## [1.0.2] - 2025-09-25
+
+### Added
+- Comprehensive REST API documentation in README.md
+- REST API usage examples for order and product endpoints
+
+### Changed
+- Improved code formatting consistency
+- Enhanced documentation with @since tags for better version tracking
+
+### Fixed
+- Code formatting issues in REST API class
+- Removed development and utility files from production
+
+### Maintenance
+- Cleaned up repository structure
+- Improved WordPress coding standards compliance
+- Enhanced PHPDoc comments
+
 ## [1.0.1] - 2025-09-25
 
 ### Added

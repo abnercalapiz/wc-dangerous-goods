@@ -24,11 +24,11 @@ When retrieving an order, the response now includes:
 
 #### Line Item Fields:
 Each line item now includes:
-- `is_dangerous_good` (boolean) - Whether this item is classified as dangerous
-- `dangerous_goods_meta` (object|null) - Additional metadata (if available)
-  - `classification` (string)
-  - `un_number` (string)
-  - `shipping_name` (string)
+- `dangerous_goods` (boolean) - Whether this item is classified as dangerous
+- `meta_data` (array) - Contains dangerous goods information when applicable:
+  - `dangerous_goods` - "yes" if item is dangerous
+  - `dangerous_goods_classification` - Classification code (if set)
+  - `dangerous_goods_un_number` - UN number (if set)
 
 ### Example Order Response:
 ```json
@@ -42,20 +42,38 @@ Each line item now includes:
       "product_id": 456,
       "name": "Lithium Battery Pack",
       "quantity": 2,
-      "is_dangerous_good": true,
-      "dangerous_goods_meta": {
-        "classification": "Class 9",
-        "un_number": "UN3480",
-        "shipping_name": "Lithium ion batteries"
-      }
+      "dangerous_goods": true,
+      "meta_data": [
+        {
+          "id": 0,
+          "key": "dangerous_goods",
+          "value": "yes",
+          "display_key": "Dangerous Goods",
+          "display_value": "Yes"
+        },
+        {
+          "id": 0,
+          "key": "dangerous_goods_classification",
+          "value": "Class 9",
+          "display_key": "Classification",
+          "display_value": "Class 9"
+        },
+        {
+          "id": 0,
+          "key": "dangerous_goods_un_number",
+          "value": "UN3480",
+          "display_key": "UN Number",
+          "display_value": "UN3480"
+        }
+      ]
     },
     {
       "id": 2,
       "product_id": 789,
       "name": "Regular Product",
       "quantity": 1,
-      "is_dangerous_good": false,
-      "dangerous_goods_meta": null
+      "dangerous_goods": false,
+      "meta_data": []
     }
   ],
   "dangerous_goods_summary": {

@@ -7,7 +7,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 /**
@@ -19,6 +19,8 @@ class WC_Dangerous_Goods_REST_API {
 
     /**
      * Constructor
+     *
+     * @since 1.0.1
      */
     public function __construct() {
         // Register REST API extensions
@@ -26,10 +28,15 @@ class WC_Dangerous_Goods_REST_API {
         
         // Add dangerous goods data to order line items
         add_filter( 'woocommerce_rest_prepare_shop_order_object', array( $this, 'add_dangerous_goods_to_order' ), 10, 3 );
+        
+        // Save dangerous goods meta when order is created
+        add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'save_dangerous_goods_order_item_meta' ), 10, 4 );
     }
 
     /**
      * Register REST API fields
+     *
+     * @since 1.0.1
      */
     public function register_rest_fields() {
         // Add dangerous goods field to products in REST API
@@ -58,6 +65,7 @@ class WC_Dangerous_Goods_REST_API {
     /**
      * Get dangerous goods status for a product
      * 
+     * @since 1.0.1
      * @param array $object Product object
      * @return boolean
      */
@@ -84,6 +92,7 @@ class WC_Dangerous_Goods_REST_API {
     /**
      * Add dangerous goods information to order response
      * 
+     * @since 1.0.1
      * @param WP_REST_Response $response
      * @param WC_Order $order
      * @param WP_REST_Request $request
@@ -103,21 +112,51 @@ class WC_Dangerous_Goods_REST_API {
                 $product = wc_get_product( $product_id );
                 
                 if ( $product && WC_Dangerous_Goods::is_dangerous_good( $product ) ) {
-                    // Add dangerous goods flag to line item
-                    $item['is_dangerous_good'] = true;
+                    // Add dangerous goods attribute to line item
+                    $item['dangerous_goods'] = true;
                     
-                    // Add product meta information
-                    $item['dangerous_goods_meta'] = array(
-                        'classification' => get_post_meta( $product_id, '_dangerous_goods_classification', true ),
-                        'un_number' => get_post_meta( $product_id, '_dangerous_goods_un_number', true ),
-                        'shipping_name' => get_post_meta( $product_id, '_dangerous_goods_shipping_name', true ),
+                    // Add dangerous goods details as meta_data
+                    if ( ! isset( $item['meta_data'] ) ) {
+                        $item['meta_data'] = array();
+                    }
+                    
+                    // Add dangerous goods meta_data entry
+                    $item['meta_data'][] = array(
+                        'id' => 0,
+                        'key' => 'dangerous_goods',
+                        'value' => 'yes',
+                        'display_key' => 'Dangerous Goods',
+                        'display_value' => 'Yes'
                     );
+                    
+                    // Add classification if available
+                    $classification = get_post_meta( $product_id, '_dangerous_goods_classification', true );
+                    if ( $classification ) {
+                        $item['meta_data'][] = array(
+                            'id' => 0,
+                            'key' => 'dangerous_goods_classification',
+                            'value' => $classification,
+                            'display_key' => 'Classification',
+                            'display_value' => $classification
+                        );
+                    }
+                    
+                    // Add UN number if available
+                    $un_number = get_post_meta( $product_id, '_dangerous_goods_un_number', true );
+                    if ( $un_number ) {
+                        $item['meta_data'][] = array(
+                            'id' => 0,
+                            'key' => 'dangerous_goods_un_number',
+                            'value' => $un_number,
+                            'display_key' => 'UN Number',
+                            'display_value' => $un_number
+                        );
+                    }
                     
                     $data['has_dangerous_goods'] = true;
                     $dangerous_goods_items[] = $item['product_id'];
                 } else {
-                    $item['is_dangerous_good'] = false;
-                    $item['dangerous_goods_meta'] = null;
+                    $item['dangerous_goods'] = false;
                 }
             }
         }
@@ -157,5 +196,39 @@ class WC_Dangerous_Goods_REST_API {
         }
         
         return null;
+    }
+    
+    /**
+     * Save dangerous goods meta to order line item
+     * 
+     * @since 1.0.1
+     * @param WC_Order_Item_Product $item
+     * @param string $cart_item_key
+     * @param array $values
+     * @param WC_Order $order
+     */
+    public function save_dangerous_goods_order_item_meta( $item, $cart_item_key, $values, $order ) {
+        if ( isset( $values['data'] ) ) {
+            $product = $values['data'];
+            
+            if ( WC_Dangerous_Goods::is_dangerous_good( $product ) ) {
+                // Add dangerous goods meta
+                $item->add_meta_data( 'dangerous_goods', 'yes', true );
+                $item->add_meta_data( '_dangerous_goods', 'yes', true ); // Hidden meta
+                
+                // Add classification if available
+                $product_id = $product->get_id();
+                $classification = get_post_meta( $product_id, '_dangerous_goods_classification', true );
+                if ( $classification ) {
+                    $item->add_meta_data( 'dangerous_goods_classification', $classification, true );
+                }
+                
+                // Add UN number if available
+                $un_number = get_post_meta( $product_id, '_dangerous_goods_un_number', true );
+                if ( $un_number ) {
+                    $item->add_meta_data( 'dangerous_goods_un_number', $un_number, true );
+                }
+            }
+        }
     }
 }

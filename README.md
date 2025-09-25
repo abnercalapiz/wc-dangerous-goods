@@ -2,7 +2,7 @@
 
 A WooCommerce plugin that adds a "Dangerous Goods" checkbox to products and automatically applies a handling fee when dangerous goods items are added to the cart.
 
-**Version:** 1.0.1  
+**Version:** 1.0.2  
 **Requires:** WordPress 5.0+, WooCommerce 3.0+  
 **License:** GPL v2 or later
 
@@ -18,7 +18,7 @@ This plugin allows you to mark products as containing dangerous goods and automa
 - **Visual Indicators**: Clear warnings on product pages and cart/checkout pages
 - **Flexible Integration**: Works with both simple and variable products
 - **Professional Styling**: Eye-catching visual alerts with warning icons
-- **REST API Support**: Full integration with WooCommerce REST API for orders and products (v1.0.1)
+- **REST API Support**: Full integration with WooCommerce REST API for orders and products
 
 ## Requirements
 
@@ -125,7 +125,7 @@ A: No, the fee is applied only once per order, regardless of how many dangerous 
 A: Yes, the plugin is translation-ready. Use the text domain `wc-dangerous-goods` for translations.
 
 ### Q: Is the dangerous goods status saved with orders?
-A: The fee is saved with the order, but individual product dangerous goods status is not stored in order meta by default.
+A: Yes! As of version 1.0.1, dangerous goods information is saved with each order line item and accessible via REST API.
 
 ## Troubleshooting
 
@@ -143,6 +143,77 @@ If you see a compatibility warning after installation, update the plugin headers
 1. Check for JavaScript errors in the browser console
 2. Ensure you have proper permissions (manage_woocommerce capability)
 3. Check for conflicts with other plugins
+
+## REST API Integration
+
+### Order Details API
+
+The plugin extends WooCommerce REST API to include dangerous goods information in order details:
+
+#### GET `/wp-json/wc/v3/orders/{id}`
+
+**Order-level fields:**
+```json
+{
+  "id": 123,
+  "has_dangerous_goods": true,
+  "dangerous_goods_summary": {
+    "has_dangerous_goods": true,
+    "dangerous_goods_fee": {
+      "name": "Dangerous Goods Fee",
+      "amount": 20,
+      "tax": 2,
+      "total": 22
+    },
+    "dangerous_goods_items": [456, 789]
+  }
+}
+```
+
+**Line item fields:**
+```json
+{
+  "line_items": [{
+    "product_id": 456,
+    "dangerous_goods": true,
+    "meta_data": [{
+      "key": "dangerous_goods",
+      "value": "yes",
+      "display_key": "Dangerous Goods",
+      "display_value": "Yes"
+    }]
+  }]
+}
+```
+
+### Product API
+
+#### GET `/wp-json/wc/v3/products/{id}`
+
+Products and variations include a `dangerous_goods` boolean field:
+```json
+{
+  "id": 456,
+  "name": "Lithium Battery",
+  "dangerous_goods": true
+}
+```
+
+### Using the REST API
+
+**Example: Get orders with dangerous goods**
+```bash
+curl -X GET https://yoursite.com/wp-json/wc/v3/orders \
+  -u consumer_key:consumer_secret
+```
+
+**Example: Update product dangerous goods status**
+```bash
+curl -X PUT https://yoursite.com/wp-json/wc/v3/products/456 \
+  -u consumer_key:consumer_secret \
+  -H "Content-Type: application/json" \
+  -d '{"dangerous_goods": true}'
+```
 
 ## Developer Information
 
@@ -213,6 +284,19 @@ For support, please contact:
 - ✅ Conditional asset loading
 
 ## Changelog
+
+### Version 1.0.2 (2025-09-25)
+- **Code Quality**: Removed development files and improved code formatting
+- **Documentation**: Added comprehensive REST API documentation
+- **Standards**: Improved WordPress coding standards compliance
+- **Maintenance**: Added @since tags to API functions
+
+### Version 1.0.1 (2025-09-25)
+- **REST API**: Full integration with WooCommerce REST API
+- **Order Meta**: Dangerous goods information now saved with order line items
+- **API Features**: Added `dangerous_goods` field to products and line items
+- **Fee Label**: Changed default from "Dangerous Goods Handling Fee" to "Dangerous Goods Fee"
+- **Documentation**: Added REST API guide and testing tools
 
 ### Version 1.0.0 (Updated)
 - **Security**: Fixed critical CSRF vulnerability in settings
